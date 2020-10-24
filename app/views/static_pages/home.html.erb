@@ -1,0 +1,24 @@
+<div class="container mt-5 d-flex justify-content-center">
+  <div class="bg-white shadow p-5 text-monospace">
+    <%= form_with(url: "/", local: true, method: "get") do |f| %>
+      <p>Enter a flickr ID to see photos</p>
+      <div class="input-group mb-3">
+        <%= f.text_field :user_id, class: "form-control", placeholder: "User Id", required: true %>
+        <div class="input-group-append">
+          <%= f.submit "Search", :class => "btn btn-outline-primary col-lg-12" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+  <% unless @photos.size.zero? %>
+    <div class="container d-flex row m-auto justify-content-center pt-5 row-cols-2 row-cols-sm-3 row-cols-lg-6 row-cols-md-4">
+      <% @photos.each do |p| %>
+        <div class="col-lg-2 mb-3 col-sm">
+          <%= link_to(image_tag(Flickr.url_q(p)), Flickr.url_photopage(p)) %>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <h4 class="text-monospace text-center text-dark w-100 col-12 mt-5">This user has no photos</h4>
+  <% end %>
